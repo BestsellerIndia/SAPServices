@@ -1,0 +1,26 @@
+{
+  "name": "sap-connection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "async": "^2.6.2",
+    "ejs": "^2.6.1",
+    "fs": "0.0.1-security",
+    "json2xls": "^0.1.2",
+    "moment": "^2.24.0",
+    "mysql": "^2.17.1",
+    "nexmo": "^2.4.3-beta-1",
+    "node-cron": "^2.0.3",
+    "node-excel-export": "^1.4.4",
+    "node-rfc": "^0.1.16",
+    "nodemailer": "^6.1.1",
+    "sapnwrfc": "^0.2.0"
+  }
+}
