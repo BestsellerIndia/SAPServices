@@ -9,7 +9,6 @@ var _ = require('lodash');
 const excel = require('node-excel-export');
 const sgMail = require('@sendgrid/mail');
 //sendgrid password
-console.log(process.env.SENDGRID_API_KEY);
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 var reqData = {

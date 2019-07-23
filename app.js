@@ -1,14 +1,7 @@
-/**
- * all require node modules for following services
- * 1. investment declaration report
- * 2. get Idoc count 
- */
 const rfcClient = require('node-rfc').Client;
 var mysql = require('mysql');
 var fs = require('fs');
-var ejs = require('ejs');
 var _ = require('lodash');
-var json2xls = require('json2xls');
 var moment = require("moment");
 var cron = require('node-cron');
 const excel = require('node-excel-export');
