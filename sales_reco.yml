@@ -1,0 +1,7 @@
+apps:
+  - script: "sales.js"
+    name: "Sales Reco"
+    watch: false
+    args: "--prod"
+    exec_mode: "cluster"
+    SENDGRID_API_KEY: SENDGRID_API_KEY

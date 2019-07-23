@@ -1,5 +1,5 @@
 apps:
-  - script: "app.js"
+  - script: "investment.js"
     name: "Investment"
     watch: false
     args: "--prod"
