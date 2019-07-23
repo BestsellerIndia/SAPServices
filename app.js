@@ -11,7 +11,6 @@ console.log(process.env.SENDGRID_API_KEY);
 //sendgrid password
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-
 function connectSAP(callback) {
     // ABAP system RFC connection parameters
     //dev env
@@ -86,7 +85,6 @@ function connectSAP(callback) {
         });
     });
 }
-
 
 function connectSQL(callback) {
     // var con = mysql.createConnection({

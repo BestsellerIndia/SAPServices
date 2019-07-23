@@ -163,7 +163,7 @@ function excelGenerate(resData) {
 
 
     var folder = "./output/";
-    var path = "car_pos.xlsx";
+    var path = "sales_reco.xlsx";
     var finalPath = folder + path;
     const report = excel.buildExport(
         [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
@@ -193,17 +193,17 @@ function sendMail(finalPath) {
         ],
         // cc: 'Ganesh.kothavale@bestseller.com',
         subject: 'pos and car details',
-        text: 'Please find attachment for pos and car Report'
+        text: 'Please find attachment for Sales Reco'
     };
     if (_.isEmpty(finalPath)) {
-        msg.text = 'No pos and car Report Found';
+        msg.text = 'No Data Found';
     } else {
-        msg.text = 'Please find attachment for pos and car Report';
+        msg.text = 'Please find attachment for Sales Reco of POS and CAR';
         var file = fs.readFileSync(finalPath);
         var base64File = new Buffer(file).toString("base64");
         msg.attachments = [{
             content: base64File,
-            filename: 'car_pos_' + moment().subtract(1, 'days').format("ll") + '.xlsx',
+            filename: 'sales_reco_' + moment().subtract(1, 'days').format("ll") + '.xlsx',
             type: 'plain/text',
             disposition: 'attachment',
             contentId: 'mytext'
