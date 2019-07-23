@@ -14,6 +14,7 @@ var cron = require('node-cron');
 const excel = require('node-excel-export');
 var async = require('async');
 const sgMail = require('@sendgrid/mail');
+console.log(process.env.SENDGRID_API_KEY);
 //sendgrid password
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -82,7 +83,7 @@ function connectSAP(callback) {
             }
             // console.log(functionName + ' call result:', res);
             var jsonfile = JSON.stringify(res);
-            fs.writeFile('sap.json', jsonfile, 'utf8', function (err, data) {
+            fs.writeFile('./output/sap.json', jsonfile, 'utf8', function (err, data) {
 
             });
             callback(null, {
@@ -151,7 +152,7 @@ function connectSQL(callback) {
                 });
             }
             var jsonfile = JSON.stringify(resultNew);
-            fs.writeFile('sql.json', jsonfile, 'utf8', function (err, data) {
+            fs.writeFile('./output/sql.json', jsonfile, 'utf8', function (err, data) {
 
             });
             callback(null, {
@@ -287,7 +288,7 @@ function excelGenerate(resData, sqlData) {
         }
     };
 
-    var folder = "./";
+    var folder = "./output/";
     var path = "Reco_Report.xlsx";
     var finalPath = folder + path;
     var path1 = "investment_report.xlsx";

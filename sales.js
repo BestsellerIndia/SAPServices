@@ -43,7 +43,7 @@ function carData(callback) {
             }
 
             var jsonfile = JSON.stringify(rows);
-            fs.writeFile('car.json', jsonfile, 'utf8', function (err, data) {
+            fs.writeFile('./output/car.json', jsonfile, 'utf8', function (err, data) {
 
             });
             callback(null, rows);
@@ -66,7 +66,7 @@ function posData(config, jsonName, callback) {
                 console.log(records.recordset.length);
                 var jsonfile = JSON.stringify(records.recordset);
                 callback(null, records.recordset);
-                fs.writeFile('./pos_json/' + jsonName + '.json', jsonfile, 'utf8', function (err, data) {
+                fs.writeFile('./output/pos_json/' + jsonName + '.json', jsonfile, 'utf8', function (err, data) {
 
                 });
             }).catch(function (err) {
@@ -163,7 +163,7 @@ function excelGenerate(resData) {
     };
 
 
-    var folder = "./";
+    var folder = "./output/";
     var path = "car_pos.xlsx";
     var finalPath = folder + path;
     const report = excel.buildExport(
