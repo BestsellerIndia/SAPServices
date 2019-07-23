@@ -17,11 +17,7 @@ const sgMail = require('@sendgrid/mail');
 //sendgrid password
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-/**
- * function to connect SAP system to call RFC 
- * RFC : to get all investment declaration for perticular period for all employees
- * @param {*} callback final callback after getting results from RFC
- */
+
 function connectSAP(callback) {
     // ABAP system RFC connection parameters
     //dev env
@@ -97,11 +93,7 @@ function connectSAP(callback) {
     });
 }
 
-/**
- * function to connect SQL system to get MBC data
- * Query : to get all investment declaration for perticular period for all employees
- * @param {*} callback 
- */
+
 function connectSQL(callback) {
     // var con = mysql.createConnection({
     //     host: 'test.kelltontech.net',

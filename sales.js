@@ -9,6 +9,7 @@ var _ = require('lodash');
 const excel = require('node-excel-export');
 const sgMail = require('@sendgrid/mail');
 //sendgrid password
+console.log(process.env.SENDGRID_API_KEY);
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 var reqData = {
@@ -210,7 +211,7 @@ function sendMail(finalPath) {
         }];
     }
 
-    // sgMail.send(msg);
+    sgMail.send(msg);
     console.log("mail sent");
 }
 async.parallel([
@@ -280,6 +281,7 @@ async.parallel([
                                     posData(pos, pos.IP_ADDRESS.replace(/\./g, "_"), posCallback);
                                 } else {
                                     console.log("in err");
+
                                     callback(null, {
                                         site: pos.SITE,
                                         pos_date: reqData.DATE_FROM,
@@ -313,22 +315,33 @@ async.parallel([
         // console.log("count of car : ", results[0]);
         // console.log("count of pos : ", results[1]);
 
-        _.forEach(results[0], function (car) {
-            _.forEach(results[1], function (pos) {
-                var pos_date = pos.pos_date.slice(0, 4) + "-" + pos.pos_date.slice(4, 6) + "-" + pos.pos_date.slice(6, 8);
-                if (pos.SITE == 1234 && car.site == "1234" && car.sales_date == 20190711)
-                    console.log('i found you', pos_date, car.sales_date);
+        _.forEach(results[1], function (pos) {
+            var pos_date = pos.pos_date.slice(0, 4) + "-" + pos.pos_date.slice(4, 6) + "-" + pos.pos_date.slice(6, 8);
+            var carDataFound = false;
+            _.forEach(results[0], function (car) {
+
                 if (car.site.toString() === pos.site.toString() &&
                     new Date(car.sales_date).setHours(0, 0, 0, 0) === new Date(pos_date).setHours(0, 0, 0, 0)
                 ) {
-                    car.pos_sales = pos.pos_sales;
-                    car.pos_qty = pos.pos_qty;
-                    car.sales_diff = car.pos_sales - car.car_sales;
-                    car.qty_diff = car.pos_qty - car.car_qty;
-                    car.connectionStatus = pos.connectionStatus === 'Failed' ? 'Failed' : 'Success';
+                    carDataFound = true;
+                    pos.car_sales = car.car_sales;
+                    pos.car_qty = car.car_qty;
+                    pos.sales_date = car.sales_date;
+                    pos.sales_diff = pos.pos_sales - pos.car_sales;
+                    pos.qty_diff = pos.pos_qty - pos.car_qty;
+                    pos.connectionStatus = pos.connectionStatus === 'Failed' ? 'Failed' : 'Success';
                 }
             })
+            if (!carDataFound) {
+                pos.car_sales = 0;
+                pos.car_qty = 0;
+                pos.sales_date = car.pos_date;
+                pos.sales_diff = pos.pos_sales;
+                pos.qty_diff = pos.pos_qty;
+                pos.connectionStatus = pos.connectionStatus === 'Failed' ? 'Failed' : 'Success';
+            }
+
         })
 
-        excelGenerate(results[0]);
+        excelGenerate(results[1]);
     });
