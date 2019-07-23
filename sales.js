@@ -220,27 +220,11 @@ async.parallel([
         function (callback) {
             async.waterfall([
                 function (callback) {
-                    // var allPos = [{
-                    //         storeCode: 1508,
-                    //         server: '10.91.171.134', //1508
-                    //         user: 'sa',
-                    //         password: 'retail!123',
-                    //         // database: "bestsellers_test"
-                    //     },
-                    //     {
-                    //         // server:'10.91.164.104',
-                    //         storeCode: 1234,
-                    //         server: '10.91', //1234
-                    //         user: 'sa',
-                    //         password: 'retail!123',
-                    //         // database: "bestsellers_test"
-                    //     }
-                    // ]
                     const connectionParams1 = {
                         host: "10.91.4.50",
                         port: 30015,
                         uid: "SUPPORT",
-                        pwd: "Best1234 ", // space is there 
+                        pwd: "Best1234 ", // space is there in password 
                         databaseName: "BP1"
                     }
 
@@ -261,7 +245,7 @@ async.parallel([
                             }
 
                             var jsonfile = JSON.stringify(allPos);
-                            fs.writeFile('allpos.json', jsonfile, 'utf8', function (err, data) {
+                            fs.writeFile('./output/allpos.json', jsonfile, 'utf8', function (err, data) {
 
                             });
                             callback(null, allPos);
