@@ -318,16 +318,6 @@ function excelGenerate(resData, sqlData) {
             }
         ],
         function (err, results) {
-            // fs.readFile(finalPath, function (err, excel) {
-            //     if (err) {
-            //         console.log(err);
-            //     } else {}
-            // });
-            // fs.readFile(finalPath1, function (err, excel) {
-            //     if (err) {
-            //         console.log(err);
-            //     } else {}
-            // });
             if (!err) {
                 sendMail(finalPath, finalPath1);
             }

@@ -10,10 +10,10 @@ const excel = require('node-excel-export');
 const sgMail = require('@sendgrid/mail');
 //sendgrid password
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
+const DATE_DIFF = 1
 var reqData = {
-    DATE_FROM: moment().subtract(1, 'days').format('YYYYMMDD'),
-    DATE_TO: moment().format('YYYYMMDD'),
+    DATE_FROM: moment().subtract(DATE_DIFF, 'days').format('YYYYMMDD'),
+    DATE_TO: moment().format('YYYYMMDD')
 }
 
 function carData(callback) {
@@ -213,6 +213,8 @@ function sendMail(finalPath) {
     sgMail.send(msg);
     console.log("mail sent");
 }
+
+// cron.schedule('0 9 * * *', () => {
 async.parallel([
         function (callback) {
             carData(callback);
@@ -264,20 +266,30 @@ async.parallel([
                                     posData(pos, pos.IP_ADDRESS.replace(/\./g, "_"), posCallback);
                                 } else {
                                     console.log("in err");
-
-                                    callback(null, {
-                                        site: pos.SITE,
-                                        pos_date: reqData.DATE_FROM,
-                                        pos_sales: 0,
-                                        pos_qty: 0,
-                                        connectionStatus: 'Failed'
-                                    }, {
-                                        site: pos.SITE,
-                                        pos_date: reqData.DATE_TO,
-                                        pos_sales: 0,
-                                        pos_qty: 0,
-                                        connectionStatus: 'Failed'
-                                    });
+                                    var resData = [];
+                                    for (var i = 0; i <= DATE_DIFF; i++) {
+                                        resData.push({
+                                            site: pos.SITE,
+                                            pos_date: moment().subtract(i, 'days').format('YYYYMMDD'),
+                                            pos_sales: 0,
+                                            pos_qty: 0,
+                                            connectionStatus: 'Failed'
+                                        })
+                                    }
+                                    // [{
+                                    //     site: pos.SITE,
+                                    //     pos_date: reqData.DATE_FROM,
+                                    //     pos_sales: 0,
+                                    //     pos_qty: 0,
+                                    //     connectionStatus: 'Failed'
+                                    // }, {
+                                    //     site: pos.SITE,
+                                    //     pos_date: reqData.DATE_TO,
+                                    //     pos_sales: 0,
+                                    //     pos_qty: 0,
+                                    //     connectionStatus: 'Failed'
+                                    // }]
+                                    callback(null, resData);
                                 }
                             } else {
                                 console.log("in success")
@@ -318,7 +330,7 @@ async.parallel([
             if (!carDataFound) {
                 pos.car_sales = 0;
                 pos.car_qty = 0;
-                pos.sales_date = car.pos_date;
+                pos.sales_date = pos_date;
                 pos.sales_diff = pos.pos_sales;
                 pos.qty_diff = pos.pos_qty;
                 pos.connectionStatus = pos.connectionStatus === 'Failed' ? 'Failed' : 'Success';
@@ -328,3 +340,4 @@ async.parallel([
 
         excelGenerate(results[1]);
     });
+// })
