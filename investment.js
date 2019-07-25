@@ -25,8 +25,8 @@ function connectSAP(callback) {
 
     //prod env
     const abapSystem = {
-        user: 'dattaraj',
-        passwd: 'best1234',
+        user: 'iabhgh',
+        passwd: 'abhi@bep1',
         ashost: '10.91.40.21',
         sysnr: '00',
         client: '400',
@@ -327,13 +327,21 @@ function excelGenerate(resData, sqlData) {
 function sendMail(finalPath, finalPath1) {
     const msg = {
         from: 'bwsupport@bestseller.com',
+        // to: [
+        //     // 'Ganesh.kothavale@bestseller.com'
+        //     'abhishek.ghosh@bestseller.com',
+        //     'ankit.shah@bestseller.com',
+        //     'shreya.ambetkar@bestseller.com', 'ronak.pandya@bestseller.com'
+        // ],
+        // cc: 'Ganesh.kothavale@bestseller.com',
         to: [
-            // 'Ganesh.kothavale@bestseller.com'
-            'abhishek.ghosh@bestseller.com',
-            'ankit.shah@bestseller.com',
-            'shreya.ambetkar@bestseller.com', 'ronak.pandya@bestseller.com'
+            'mangesh.velye@bestseller.com'
         ],
-        cc: 'Ganesh.kothavale@bestseller.com',
+        cc: ['jimmy.shah@bestseller.com',
+            'ravindra.dakare@bestseller.com',
+            'ankit.shah@bestseller.com',
+            'abhishek.ghosh@bestseller.com'
+        ],
         subject: 'Investment Declaration Report:',
         text: 'Please find attachment for Investment Declaration Report'
     };
@@ -365,7 +373,7 @@ function sendMail(finalPath, finalPath1) {
     sgMail.send(msg);
 }
 
-cron.schedule('0 9 * * *', () => {
+cron.schedule('45 2 * * *', () => {
     async.parallel([
             function (callback) {
                 connectSAP(callback);
